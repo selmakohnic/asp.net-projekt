@@ -1,48 +1,55 @@
 ﻿@model smalandscamping.Models.Cottage
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detaljer stuga";
 }
 
-<h1>Details</h1>
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><span class="breadcrumbItemLoggedIn">Inloggad</span> / <a class="breadcrumbItem" asp-area="" asp-controller="Cottages" asp-action="Index">Hem</a> / Detaljer stuga</p>
 
-<div>
-    <h4>Cottage</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfGuest)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfGuest)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnimalsAllowed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnimalsAllowed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.CottageId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapperAuthentication margin">
+        <i class="fas fa-edit cottageIcon"></i>
+        <h1 class="title">Detaljer stuga</h1>
+
+        <dl class="row">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.NumberOfGuest)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfGuest)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AnimalsAllowed)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AnimalsAllowed)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.CottageId" class="linkBackEdit"><i class="fas fa-edit"></i> Ändra</a><br /> 
+            <a asp-action="Index" class="linkBack"><i class="fas fa-chevron-left"></i> Tillbaka till stugorna</a>
+        </div>
+    </div>
+    <div id="border-bottom"></div>
 </div>

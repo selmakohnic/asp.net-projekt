@@ -1,63 +1,77 @@
 ﻿@model IEnumerable<smalandscamping.Models.Cottage>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Stugor";
 }
 
-<h1>Index</h1>
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><span class="breadcrumbItemLoggedIn">Inloggad</span> / <a class="breadcrumbItem" asp-area="" asp-controller="Cottages" asp-action="Index">Hem</a></p>
 
-<div class="wrapper">
-    <p>
-        <a asp-action="Create" class="btn">Lägg till stuga</a>
-    </p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberOfGuest)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AnimalsAllowed)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOfGuest)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AnimalsAllowed)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description, "ShortDescription")
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.CottageId"><i class="fas fa-edit"></i></a> |
-                        <a asp-action="Details" asp-route-id="@item.CottageId"><i class="fas fa-info"></i></a> |
-                        <a asp-action="Delete" asp-route-id="@item.CottageId"><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapper margin">
+        <i class="fas fa-home cottageIcon"></i>
+        <h1 class="title">Stugor</h1>
+        <p>
+            <a asp-action="Create" class="btn">Lägg till stuga</a>
+        </p>
+        <div class="wrapperTable">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumberOfGuest)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AnimalsAllowed)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsBooked)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberOfGuest)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AnimalsAllowed)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DescriptionTrimmed)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsBooked)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.CottageId"><i class="fas fa-edit crudItem"></i></a> |
+                                <a asp-action="Details" asp-route-id="@item.CottageId"><i class="fas fa-info crudItem"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@item.CottageId"><i class="fas fa-trash-alt crudItem"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="border-bottom"></div>
 </div>

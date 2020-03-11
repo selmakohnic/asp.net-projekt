@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Bookings
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Booking.Include(b => b.Cottage).Include(b => b.User);
@@ -27,6 +29,7 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Bookings/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,6 +50,7 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Bookings/Create
+        [Authorize]
         public IActionResult Create(int id)
         {
             Cottage c1 = new Cottage();
@@ -69,6 +73,7 @@ namespace smalandscamping.Controllers
         // POST: Bookings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BookingId,UserId,DateArrival,DateLeaving,TotalPrice")] Booking booking, int id)
@@ -78,18 +83,15 @@ namespace smalandscamping.Controllers
                 // Räkna ut totalpris
                 int days = (booking.DateLeaving.Date - booking.DateArrival.Date).Days;
 
-                //Stugans id = id
-                //int id = Convert.ToInt32(Request.Form["cid"]);
-
                 var cottage = await _context.Cottage
                 .FirstOrDefaultAsync(m => m.CottageId == booking.CottageId);
 
-                //int cottagePrice = Convert.ToInt32(Request.Form["price"]);
-                
-                var cottagePrice = Convert.ToInt32(Request.Form["price"]);   // Läs ut pris för aktuell stuga
+                //Läser ut pris för aktuell stuga
+                var cottagePrice = Convert.ToInt32(Request.Form["price"]);
 
                 int TotalPrice = cottagePrice;
 
+                //Pris baserat på hur många dagar som väljs
                 if (days > 2 && days <= 4)
                 {
                     TotalPrice = cottagePrice + 1000;
@@ -99,11 +101,18 @@ namespace smalandscamping.Controllers
                     TotalPrice = cottagePrice + 2000;
                 }
 
-                // Lagra värde för totalpris innan lagring i databas
+                //Lagrar värde för totalpris innan lagring i databas
                 booking.TotalPrice = TotalPrice;
                 booking.CottageId = id;
 
+                //Den stuga med det id som finns här ska få cottage.IsBooked = true;
+                if (cottage.CottageId == booking.CottageId)
+                {
+                    cottage.IsBooked = true;
+                }
+
                 _context.Add(booking);
+                //_context.Add(cottage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -125,6 +134,7 @@ namespace smalandscamping.Controllers
         }*/
 
         // GET: Bookings/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -145,6 +155,7 @@ namespace smalandscamping.Controllers
         // POST: Bookings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BookingId,UserId,CottageId,DateArrival,DateLeaving,TotalPrice")] Booking booking)
@@ -180,6 +191,7 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Bookings/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -200,6 +212,7 @@ namespace smalandscamping.Controllers
         }
 
         // POST: Bookings/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

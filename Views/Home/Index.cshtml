@@ -9,26 +9,31 @@
 <table class="table">
 
     <tbody>
+
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfGuest)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AnimalsAllowed)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td><a asp-controller="Bookings" asp-action="Create" asp-route-id="@item.CottageId">Köp</a></td>
-            </tr>
+            //Visar endast de stugor som finns tillgängliga för bokning
+            @if (item.IsBooked == false)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfGuest)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnimalsAllowed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td><a asp-controller="Bookings" asp-action="Create" asp-route-id="@item.CottageId">Köp</a></td>
+                </tr>
+            }
         }
     </tbody>
 </table>

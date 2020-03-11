@@ -4,48 +4,53 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><span class="breadcrumbItemLoggedIn">Inloggad</span> / <a class="breadcrumbItem" asp-area="" asp-controller="Cottages" asp-action="Index">Hem</a> / Radera stuga</p>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Cottage</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfGuest)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfGuest)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnimalsAllowed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnimalsAllowed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="CottageId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapperAuthentication margin">
+        <i class="fas fa-trash-alt cottageIcon"></i>
+        <h1 class="title">Radera stuga</h1>
+
+        <dl class="row">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.NumberOfGuest)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfGuest)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AnimalsAllowed)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AnimalsAllowed)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="CottageId" />
+            <input type="submit" value="Radera" class="authenticationBtn btn" />
+            <a asp-action="Index" class="linkBack"><i class="fas fa-chevron-left"></i> Tillbaka till stugorna</a>
+        </form>
+    </div>
+    <div id="border-bottom"></div>
 </div>

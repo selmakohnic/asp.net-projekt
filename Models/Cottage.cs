@@ -33,9 +33,29 @@ namespace smalandscamping.Models
 
         //Beskrivning
         [Required]
-        [DisplayFormat(DataFormatString = "{0,20}")]
-        [UIHint("ShortDescription")]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
+
+        //Kortare version av beskrivning
+        public string DescriptionTrimmed
+        {
+            get
+            {
+                if (Description.Length > 50)
+                {
+                    return Description.Substring(0, 50) + " [...]";
+                }
+                return Description;    
+            }
+        }
+
+        //Om stugan är bokad
+        [Display(Name = "Bokad")]
+        public bool IsBooked  { get; set; }
+
+        public Cottage()
+        {
+            IsBooked = false;
+        }
     }
 }
