@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Kontakt";
+}
+
+<div class="headerImg contactImg">
+    <section>
+        <h1>Kontakt</h1>
+        <h3>Här hittar du våra kontaktuppgifter</h3>
+    </section>
+</div>
+
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><a class="breadcrumbItem" asp-area="" asp-controller="Home" asp-action="Index">Hem</a> / Kontakt</p>
+
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapper wrapperPlacement margin">
+        <div class="wrapperBox">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Adress</h3>
+            <p class="wrapperCenter">Smålands Camping</p>
+            <p class="wrapperCenter">364 46 Småland</p>
+        </div>
+        <div class="wrapperBox">
+            <i class="fas fa-phone-alt"></i>
+            <h3>Telefon</h3>
+            <p class="wrapperCenter">Reception 0441-462 41</p>
+            <p class="wrapperCenter">Restaurang 0441-462 46</p>
+        </div>
+        <div class="wrapperBox">
+            <i class="fas fa-envelope"></i>
+            <h3>E-post</h3>
+            <p class="wrapperCenter">info@smalandscamping.se</p>
+        </div>
+    </div>
+    <div id="border-bottom"></div>
+</div>
+
+<div class="wrapper wrapperForm">
+    <!-- Kontaktforumlär -->
+    <form id="contactForm">
+        <h3>Skicka mail till oss</h3>
+        <p><i>Fält markerade med * är obligatoriska</i></p>
+        <div>
+            <p>
+                <label>
+                    Namn: *<br />
+                    <input type="text" name="namn" placeholder="Förnamn Efternamn" required class="inputText" />
+                </label>
+            </p>
+            <p>
+                <label>
+                    E-postadress: *<br />
+                    <input type="email" name="e-post" placeholder="namn@domän.se" required class="inputText" />
+                </label>
+            </p>
+            <p>
+                <label>
+                    Telefonnummer: *<br />
+                    <input type="tel" name="telefonnummer" required class="inputText" />
+                </label>
+            </p>
+            <p>
+                <label>
+                    Ämne: *<br />
+                    <input type="text" name="subject" required class="inputText" />
+                </label>
+            </p>
+            <label>
+                Meddelande:
+            </label>
+            <textarea name="meddelande" cols="50" rows="6" class="inputText"></textarea>
+            <br />
+        </div>
+        <input type="submit" name="skicka" value="Skicka" class="formBtn btn" />
+    </form>
+</div>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10133.21771710073!2d16.338862331595163!3d56.662771730479804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4657d17986f136ff%3A0x3e283263bff994d3!2sSm%C3%A5landsgatan%2C%20Kalmar!5e0!3m2!1ssv!2sse!4v1583748510140!5m2!1ssv!2sse" allowfullscreen=""></iframe>

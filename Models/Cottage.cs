@@ -33,6 +33,8 @@ namespace smalandscamping.Models
 
         //Beskrivning
         [Required]
+        [DisplayFormat(DataFormatString = "{0,20}")]
+        [UIHint("ShortDescription")]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
     }

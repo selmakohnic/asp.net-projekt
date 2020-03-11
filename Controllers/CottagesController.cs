@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,14 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Cottages
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Cottage.ToListAsync());
         }
 
         // GET: Cottages/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Cottages/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -52,6 +56,7 @@ namespace smalandscamping.Controllers
         // POST: Cottages/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description")] Cottage cottage)
@@ -66,6 +71,7 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Cottages/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,6 +90,7 @@ namespace smalandscamping.Controllers
         // POST: Cottages/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description")] Cottage cottage)
@@ -117,6 +124,7 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Cottages/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +143,7 @@ namespace smalandscamping.Controllers
         }
 
         // POST: Cottages/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

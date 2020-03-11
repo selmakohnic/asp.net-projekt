@@ -1,35 +1,44 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registrera konto";
 }
 
-<h1>@ViewData["Title"]</h1>
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><a class="breadcrumbItem" asp-area="" asp-controller="Home" asp-action="Index">Hem</a> / Registrera konto</p>
 
-<div class="row">
-    <div class="col-md-4">
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapperAuthentication margin">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
+            <i class="fas fa-user"></i>
+            <h2>Registrera konto</h2>
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            <div>
+                <p>
+                    <label asp-for="Input.Email">E-post</label>
+                    <input asp-for="Input.Email" class="inputText" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </p>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <div>
+                <p>
+                    <label asp-for="Input.Password">Lösenord</label>
+                    <input asp-for="Input.Password" class="inputText" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </p>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            <div>
+                <p>
+                    <label asp-for="Input.ConfirmPassword">Bekräfta lösenord</label>
+                    <input asp-for="Input.ConfirmPassword" class="inputText" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </p>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="authenticationBtn btn marginBtn">Skapa konto</button>
         </form>
     </div>
+    <div id="border-bottom"></div>
 </div>
 
 @section Scripts {

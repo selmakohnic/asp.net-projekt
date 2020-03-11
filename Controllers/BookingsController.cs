@@ -47,10 +47,22 @@ namespace smalandscamping.Controllers
         }
 
         // GET: Bookings/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Description");
+            Cottage c1 = new Cottage();
+            ViewData["cottageid"] = id;
+            var cottage = _context.Cottage
+                .FirstOrDefault(m => m.CottageId == id);
+
+            ViewData["cottagename"] = cottage.Name;
+            ViewData["cottageprice"] = cottage.Price;
+
+            //ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Name");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            /*ViewData["Price"] = from m in _context.Cottage.Include(c => c.Price)
+                                select m;*/
+            //FORTSÄTT HÄR ViewData["Price"] = _context.Cottage.Include(b => b.Price);
+
             return View();
         }
 
@@ -59,7 +71,47 @@ namespace smalandscamping.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookingId,UserId,CottageId,DateArrival,DateLeaving,TotalPrice")] Booking booking)
+        public async Task<IActionResult> Create([Bind("BookingId,UserId,DateArrival,DateLeaving,TotalPrice")] Booking booking, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                // Räkna ut totalpris
+                int days = (booking.DateLeaving.Date - booking.DateArrival.Date).Days;
+
+                //Stugans id = id
+                //int id = Convert.ToInt32(Request.Form["cid"]);
+
+                var cottage = await _context.Cottage
+                .FirstOrDefaultAsync(m => m.CottageId == booking.CottageId);
+
+                //int cottagePrice = Convert.ToInt32(Request.Form["price"]);
+                
+                var cottagePrice = Convert.ToInt32(Request.Form["price"]);   // Läs ut pris för aktuell stuga
+
+                int TotalPrice = cottagePrice;
+
+                if (days > 2 && days <= 4)
+                {
+                    TotalPrice = cottagePrice + 1000;
+                }
+                else if (days > 4)
+                {
+                    TotalPrice = cottagePrice + 2000;
+                }
+
+                // Lagra värde för totalpris innan lagring i databas
+                booking.TotalPrice = TotalPrice;
+                booking.CottageId = id;
+
+                _context.Add(booking);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Name", booking.CottageId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserN", booking.UserId);
+            return View(booking);
+        }
+        /*public async Task<IActionResult> Create([Bind("BookingId,UserId,CottageId,DateArrival,DateLeaving,TotalPrice")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +122,7 @@ namespace smalandscamping.Controllers
             ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Description", booking.CottageId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
             return View(booking);
-        }
+        }*/
 
         // GET: Bookings/Edit/5
         public async Task<IActionResult> Edit(int? id)
