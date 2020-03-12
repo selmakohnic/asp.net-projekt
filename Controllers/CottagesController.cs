@@ -59,7 +59,7 @@ namespace smalandscamping.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description")] Cottage cottage)
+        public async Task<IActionResult> Create([Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description,IsBooked")] Cottage cottage)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace smalandscamping.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description")] Cottage cottage)
+        public async Task<IActionResult> Edit(int id, [Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description,IsBooked")] Cottage cottage)
         {
             if (id != cottage.CottageId)
             {

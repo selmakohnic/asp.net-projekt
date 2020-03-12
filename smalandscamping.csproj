@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-smalandscamping-242DAC5B-636E-4603-822E-5E14774F65C1</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200312184424_NewestCreate.cs" />
+    <Compile Remove="Data\Migrations\20200312184424_NewestCreate.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,10 @@ namespace smalandscamping.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
+            //Inloggad användares id
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.userid = userId;
+
             var applicationDbContext = _context.Booking.Include(b => b.Cottage).Include(b => b.User);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -60,7 +65,7 @@ namespace smalandscamping.Controllers
 
             ViewData["cottagename"] = cottage.Name;
             ViewData["cottageprice"] = cottage.Price;
-            ViewData["isbooked"] = cottage.IsBooked;
+           
 
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
 
@@ -77,13 +82,13 @@ namespace smalandscamping.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Räkna ut totalpris
+                // Räknar ut antal dagar baserat på datumen som har valts
                 int days = (booking.DateLeaving.Date - booking.DateArrival.Date).Days;
 
                 var cottage = await _context.Cottage
                 .FirstOrDefaultAsync(m => m.CottageId == booking.CottageId);
 
-                //Läser ut pris för aktuell stuga
+                //Pris för aktuell stuga
                 var cottagePrice = Convert.ToInt32(Request.Form["price"]);
 
                 int TotalPrice = cottagePrice;
@@ -93,23 +98,34 @@ namespace smalandscamping.Controllers
                 {
                     TotalPrice = cottagePrice + 1000;
                 }
-                else if (days > 4)
+                else if (days > 4 && days <= 8)
                 {
                     TotalPrice = cottagePrice + 2000;
+                }
+                else if (days > 8)
+                {
+                    TotalPrice = cottagePrice + 3000;
                 }
 
                 //Lagrar värde för totalpris innan lagring i databas
                 booking.TotalPrice = TotalPrice;
                 booking.CottageId = id;
 
-                //Stugan har blivit bokad
-                if (Request.Form["isbooked"] == "false")
-                {
-                    cottage.IsBooked = true;
-                }
+                //Tilldelar bokningen till den användare som är inloggad
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                booking.UserId = userId;
+
+                //Bokningsstatus för stugan ändras till bokad
+                Cottage bookingResult = (from p in _context.Cottage
+                             where p.CottageId == id
+                             select p).SingleOrDefault();
+
+                bookingResult.IsBooked = true;
+
+                _context.SaveChanges();
 
                 _context.Add(booking);
-                _context.Add(cottage);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
