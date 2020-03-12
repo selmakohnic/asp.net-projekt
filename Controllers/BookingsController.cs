@@ -60,12 +60,9 @@ namespace smalandscamping.Controllers
 
             ViewData["cottagename"] = cottage.Name;
             ViewData["cottageprice"] = cottage.Price;
+            ViewData["isbooked"] = cottage.IsBooked;
 
-            //ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Name");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            /*ViewData["Price"] = from m in _context.Cottage.Include(c => c.Price)
-                                select m;*/
-            //FORTSÄTT HÄR ViewData["Price"] = _context.Cottage.Include(b => b.Price);
 
             return View();
         }
@@ -105,14 +102,14 @@ namespace smalandscamping.Controllers
                 booking.TotalPrice = TotalPrice;
                 booking.CottageId = id;
 
-                //Den stuga med det id som finns här ska få cottage.IsBooked = true;
-                if (cottage.CottageId == booking.CottageId)
+                //Stugan har blivit bokad
+                if (Request.Form["isbooked"] == "false")
                 {
                     cottage.IsBooked = true;
                 }
 
                 _context.Add(booking);
-                //_context.Add(cottage);
+                _context.Add(cottage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -120,18 +117,6 @@ namespace smalandscamping.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserN", booking.UserId);
             return View(booking);
         }
-        /*public async Task<IActionResult> Create([Bind("BookingId,UserId,CottageId,DateArrival,DateLeaving,TotalPrice")] Booking booking)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Description", booking.CottageId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
-            return View(booking);
-        }*/
 
         // GET: Bookings/Edit/5
         [Authorize]
