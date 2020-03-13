@@ -26,7 +26,7 @@ namespace smalandscamping.Models
 
         //Max antal gäster i en stuga mellan 1 - 10 stycken
         [Required(ErrorMessage = "Ange max antal gäster i stugan")]
-        [Display(Name = "Antal gäster")]
+        [Display(Name = "Max antal gäster")]
         [Range(1,10, ErrorMessage = "Antal gäster kan endast vara mellan 1 - 10 stycken")]
         public int NumberOfGuest { get; set; }
 

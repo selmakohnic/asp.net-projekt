@@ -6,17 +6,17 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                Stuga
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cottage)
+                @Html.DisplayNameFor(model => model.Cottage.NumberOfGuest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cottage.AnimalsAllowed)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateArrival)
@@ -37,10 +37,13 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.User.Id)
+                        @Html.DisplayFor(modelItem => item.Cottage.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Cottage.Description)
+                        @Html.DisplayFor(modelItem => item.Cottage.NumberOfGuest)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cottage.AnimalsAllowed)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateArrival)
@@ -49,7 +52,7 @@
                         @Html.DisplayFor(modelItem => item.DateLeaving)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                        @Html.DisplayFor(modelItem => item.TotalPrice) kr
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> |

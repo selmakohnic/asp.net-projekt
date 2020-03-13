@@ -31,7 +31,7 @@ namespace smalandscamping.Models
 
         //Datum för hemkomst med en kontroll av val av datum
         [Required(ErrorMessage = "Välj ett datum för din hemkomst")]
-        [Display(Name = "Datum för hemkomst")]
+        [Display(Name = "Datum för hemfärd")]
         [DataType(DataType.Date)]
         [DateCheck(ErrorMessage = "Du kan inte välja ett datum som redan har varit")]
         public DateTime DateLeaving { get; set; }

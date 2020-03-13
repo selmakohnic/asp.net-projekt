@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    string animalsAllowed = Convert.ToString(ViewData["animalsallowed"]);  
 }
 
 <h1>Create</h1>
@@ -12,15 +13,21 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <!--<div class="form-group">
-        <label asp-for="UserId" class="control-label"></label>
-        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-    </div>-->
-            <!-- <div class="form-group">
-        <label asp-for="CottageId" class="control-label"></label>
-        <select asp-for="CottageId" class="form-control" asp-items="ViewBag.CottageId"></select>
-    </div>-->
+
             <div class="form-group">
+                <input type="hidden" value="@ViewData["cottageprice"]" name="price" />
+                <p>@ViewData["cottagename"]</p>
+                <p>@ViewData["cottageprice"]</p>
+                <p>Max @ViewData["numberofguests"] gäster</p>
+                <!-- Kontroll av om djur är tillåtna eller inte -->
+                @if (animalsAllowed == "False")
+                {
+                    <p>Djur inte tillåtna</p>
+                }
+                else
+                {
+                    <p>Djur tillåtna</p>
+                }
                 <label asp-for="DateArrival" class="control-label"></label>
                 <input asp-for="DateArrival" class="form-control" />
                 <span asp-validation-for="DateArrival" class="text-danger"></span>
@@ -30,19 +37,6 @@
                 <input asp-for="DateLeaving" class="form-control" />
                 <span asp-validation-for="DateLeaving" class="text-danger"></span>
             </div>
-
-            <input type="text" value="@ViewData["cottageid"]" name="cid" />
-            <p>@ViewData["cottagename"]</p>
-            <p>@ViewData["cottageprice"]</p>
-            <p>@ViewData["isbooked"]</p>
-            <input type="text" value="@ViewData["cottageprice"]" name="price" />
-            <input type="text" value="@ViewData["isbooked"]" name="isbooked" />
-
-            <!--<div class="form-group">
-        <label asp-for="TotalPrice" class="control-label"></label>
-        <input asp-for="TotalPrice" class="form-control" />
-        <span asp-validation-for="TotalPrice" class="text-danger"></span>
-    </div> -->
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

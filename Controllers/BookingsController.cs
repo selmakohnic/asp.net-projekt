@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -54,27 +55,29 @@ namespace smalandscamping.Controllers
             return View(booking);
         }
 
+        //Information om stugan som bokas
+        public void InfoCottage(int id)
+        {
+            var cottage = _context.Cottage
+                .FirstOrDefault(m => m.CottageId == id);
+
+            ViewData["cottageid"] = id;
+            ViewData["cottagename"] = cottage.Name;
+            ViewData["cottageprice"] = cottage.Price;
+            ViewData["numberofguests"] = cottage.NumberOfGuest;
+            ViewData["animalsallowed"] = cottage.AnimalsAllowed;
+        }
+
         // GET: Bookings/Create
         [Authorize]
         public IActionResult Create(int id)
         {
-            Cottage c1 = new Cottage();
-            ViewData["cottageid"] = id;
-            var cottage = _context.Cottage
-                .FirstOrDefault(m => m.CottageId == id);
-
-            ViewData["cottagename"] = cottage.Name;
-            ViewData["cottageprice"] = cottage.Price;
-           
-
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            InfoCottage(id);
 
             return View();
         }
 
         // POST: Bookings/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -122,18 +125,21 @@ namespace smalandscamping.Controllers
 
                 bookingResult.IsBooked = true;
 
-                _context.SaveChanges();
+                //_context.SaveChanges();
 
                 _context.Add(booking);
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Name", booking.CottageId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserN", booking.UserId);
+
+            //Visar information om stugan 
+            InfoCottage(id);
+
             return View(booking);
         }
 
+        /*------ PROBLEM HÄR! ------*/
         // GET: Bookings/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
@@ -144,22 +150,41 @@ namespace smalandscamping.Controllers
             }
 
             var booking = await _context.Booking.FindAsync(id);
+
+            var bookingId = _context.Booking
+                .FirstOrDefault(m => m.BookingId == id);
+
+            //Hämta id från stuga där booking id = id
+            Booking cottageBooking = (from m in _context.Booking
+                                     where m.BookingId == id
+                                     select m).SingleOrDefault();
+
+            var cottageId = cottageBooking.CottageId;
+
+            //Hämtar stugans pris
+            Cottage cottagePrice = (from m in _context.Cottage
+                                    where m.CottageId == cottageId
+                                    select m).SingleOrDefault();
+
+            ViewData["cottageprice"] = cottagePrice.Price;
+
             if (booking == null)
             {
                 return NotFound();
             }
-            ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Description", booking.CottageId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
+            
+
             return View(booking);
         }
 
+        /*------ PROBLEM HÄR! ------*/
         // POST: Bookings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookingId,UserId,CottageId,DateArrival,DateLeaving,TotalPrice")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("BookingId,UserId,DateArrival,DateLeaving,TotalPrice")] Booking booking)
         {
             if (id != booking.BookingId)
             {
@@ -170,6 +195,48 @@ namespace smalandscamping.Controllers
             {
                 try
                 {
+                    // Räknar ut antal dagar baserat på datumen som har valts
+                    int days = (booking.DateLeaving.Date - booking.DateArrival.Date).Days;
+
+                    var cottage = await _context.Cottage
+                    .FirstOrDefaultAsync(m => m.CottageId == booking.CottageId);
+
+                    //Pris för aktuell stuga
+                    var cottagePrice = Convert.ToInt32(Request.Form["price"]);
+
+                    int TotalPrice = cottagePrice;
+
+                    //Pris baserat på hur många dagar som väljs
+                    if (days > 2 && days <= 4)
+                    {
+                        TotalPrice = cottagePrice + 1000;
+                    }
+                    else if (days > 4 && days <= 8)
+                    {
+                        TotalPrice = cottagePrice + 2000;
+                    }
+                    else if (days > 8)
+                    {
+                        TotalPrice = cottagePrice + 3000;
+                    }
+
+                    //Lagrar värde för totalpris innan lagring i databas
+                    booking.TotalPrice = TotalPrice;
+                    booking.CottageId = id;
+
+                    //Tilldelar bokningen till den användare som är inloggad
+                    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    booking.UserId = userId;
+
+                    //Bokningsstatus för stugan ändras till bokad
+                    /*Cottage bookingResult = (from p in _context.Cottage
+                                             where p.CottageId == id
+                                             select p).SingleOrDefault();
+
+                    bookingResult.IsBooked = true;*/
+
+                    //_context.Add(booking);
+
                     _context.Update(booking);
                     await _context.SaveChangesAsync();
                 }
@@ -186,8 +253,8 @@ namespace smalandscamping.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Description", booking.CottageId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);
+            /*ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Description", booking.CottageId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);*/
             return View(booking);
         }
 

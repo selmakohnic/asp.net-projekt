@@ -10,35 +10,41 @@
     <h4>Booking</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
+        <dt class="col-sm-2">
+            Stuga
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cottage.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cottage)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cottage.NumberOfGuest)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cottage.Description)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cottage.NumberOfGuest)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cottage.AnimalsAllowed)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cottage.AnimalsAllowed)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DateArrival)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateArrival)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DateLeaving)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateLeaving)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TotalPrice)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalPrice)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalPrice) kr
         </dd>
     </dl>
 </div>
