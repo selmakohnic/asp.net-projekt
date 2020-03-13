@@ -285,8 +285,23 @@ namespace smalandscamping.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //Kod för att ändra bokningsstatus
+            Booking cottageBooking = (from m in _context.Booking
+                                      where m.BookingId == id
+                                      select m).SingleOrDefault();
+
+            var cottageId = cottageBooking.CottageId;
+
+            Cottage bookingResult = (from m in _context.Cottage
+                                    where m.CottageId == cottageId
+                                    select m).SingleOrDefault();
+
+            //Bokningsstatus ändrad
+            bookingResult.IsBooked = false;
+
             var booking = await _context.Booking.FindAsync(id);
             _context.Booking.Remove(booking);
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
