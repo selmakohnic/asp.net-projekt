@@ -36,6 +36,7 @@ namespace smalandscamping.Models
         [DateCheck(ErrorMessage = "Du kan inte välja ett datum som redan har varit")]
         public DateTime DateLeaving { get; set; }
 
+        //Totalt pris
         [Display(Name = "Totalt pris")]
         public double TotalPrice { get; set; }
     }

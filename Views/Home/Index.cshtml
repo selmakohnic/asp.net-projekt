@@ -1,16 +1,35 @@
 ﻿@model IEnumerable<smalandscamping.Models.Cottage>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Startsida";
 }
 
+<!-- Header med bild, text och knapp för inloggning -->
+<div class="headerImgIndex indexImg">
+    <div class="wrapper">
+        <div id="indexInfo">
+            <h1>Smålands Camping</h1>
+            <h3>Boka en stuga genom att logga in</h3>
+            <a class="formBtn headerBtn btn" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
+        </div>
+        <partial name="~/Views/Shared/_WeatherNow.cshtml" />
+    </div>
+</div>
 
+<div class="wrapper">
+    <h2 id="indexTitle"><i class="fas fa-angle-double-right"></i>Vi har en stuga för alla <i class="fas fa-angle-double-left"></i></h2>
+</div>
+
+<!-- Stugorna som kan hyras -->
 <div id="lightBackground">
     <div id="border-top"></div>
     <div class="wrapper wrapperPlacement margin">
         @foreach (var item in Model)
         {
+            //Sökväg till bilderna
             var photoPath = "~/img/cottageimg/" + item.PhotoPath;
+
+            //Om djur är tillåtna eller inte
             string animalsAllowed = Convert.ToString(item.AnimalsAllowed);
 
             //Visar endast de stugor som finns tillgängliga för bokning
@@ -18,28 +37,30 @@
             {
                 <div class="wrapperBox wrapperIndex">
                     <img src="@photoPath" asp-append-version="true" />
-                    <h2>@Html.DisplayFor(modelItem => item.Name)</h2>
-                    <ul>
-                        <li><i class="fas fa-money-bill-wave"></i> @Html.DisplayFor(modelItem => item.Price) kr</li>
-                        <li><i class="fas fa-bed"></i> @Html.DisplayFor(modelItem => item.NumberOfGuest) gäster</li>
-                        <li>
-                            <i class="fas fa-dog"></i>
-                            <!-- Kontroll av om djur är tillåtna eller inte -->
-                            @if (animalsAllowed == "False")
-                            {
-                                <span>Djur inte tillåtna</span>
-                            }
-                            else
-                            {
-                                <span>Djur tillåtna</span>
-                            }
-                        </li>
-                    </ul>
-                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                    <div class="contentIndex">
+                        <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                        <ul>
+                            <li><i class="fas fa-money-bill-wave"></i> @Html.DisplayFor(modelItem => item.Price) kr</li>
+                            <li><i class="fas fa-bed"></i> @Html.DisplayFor(modelItem => item.NumberOfGuest) gäster</li>
+                            <li>
+                                <i class="fas fa-dog"></i>
+                                <!-- Kontroll av om djur är tillåtna eller inte -->
+                                @if (animalsAllowed == "False")
+                                {
+                                    <span>Djur inte tillåtna</span>
+                                }
+                                else
+                                {
+                                    <span>Djur tillåtna</span>
+                                }
+                            </li>
+                        </ul>
+                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                    </div>
                     <!-- Visar bokningsknappen om användaren inte är admin -->
                     @if (!User.IsInRole("Admin"))
                     {
-                        <a asp-controller="Bookings" asp-action="Create" asp-route-id="@item.CottageId" class="authenticationBtn btn">Boka</a>
+                        <a asp-controller="Bookings" asp-action="Create" asp-route-id="@item.CottageId" class="authenticationBtn btn indexBtn">Boka</a>
                     }
                 </div>
             }

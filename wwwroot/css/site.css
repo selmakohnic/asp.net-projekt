@@ -58,7 +58,7 @@ a {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 1em;
+  font-size: 0.95em;
 }
 @media (min-width: 768px) {
   html {
@@ -148,7 +148,7 @@ h1 {
     margin-bottom: 0;
 }
 
-/*------ MIN KOD ------*/
+/*------ STARTSIDA OCH GENERELLT ------*/
 #logo {
     width: 13em;
 }
@@ -157,6 +157,35 @@ h1 {
     height: 28em; 
     width: 100%;
     position: relative;
+}
+
+.headerImgIndex {
+    height: 28em;
+    width: 100%;
+    color: #fff;
+}
+
+.headerBtn {
+    float: left !important; 
+}
+
+.headerImgIndex h1 {
+    text-align: left !important;
+    font-size: 4em;
+    padding-top: 1.5em;
+}
+
+.headerImgIndex h3 {
+    text-align: left;
+}
+
+#indexTitle {
+    text-align: center;
+    margin-top: 2em;
+}
+
+.indexImg {
+    background-image: url(../img/index.jpg);
 }
 
 .activitiesImg {
@@ -230,8 +259,9 @@ h1 {
 }
 
 .wrapper .wrapperBox img {
+    object-fit: cover;
     max-width: 100%;
-    height: auto;
+    height: 14em;
 }
 
 .wrapper .wrapperBox .fas, .wrapper .wrapperBox .far, .fa-user, .fa-unlock, .cottageIcon {
@@ -251,6 +281,23 @@ h1 {
 
 .wrapperCenter {
     text-align: center !important;
+}
+
+.wrapperIndex {
+    background-color: #fff;
+    position: relative;
+    margin-bottom: 7em !important;
+}
+
+.contentIndex {
+    padding: 1em;
+}
+
+.indexBtn {
+    margin-bottom: 0 !important;
+    position: absolute;
+    bottom: -3em;
+    display: block;
 }
 
 .wrapperIndex .fas {
@@ -284,6 +331,40 @@ h1 {
     height: 1em;
     bottom: -1em;
     position: absolute;
+}
+
+/*------ VÄDER-API FRÅN SMHI ------*/
+#wrapperWeather {
+    background-color: #44808b;
+    width: 40%;
+    color: #fff;
+    float: right;
+    padding: 1.5em;
+    margin-top: 7em;
+}
+
+#wrapperWeather h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+#wrapperWeather p {
+    margin-bottom: 0;
+    margin-top: 1.5em;
+}
+
+#wrapperWeather table {
+    width: 100%;
+}
+
+#wrapperWeather table th {
+    border-bottom: 1px solid #fff;
+}
+
+#indexInfo {
+    width: 60%;
+    float: left;
 }
 
 /*------ CAMPINGEN ------*/

@@ -1,0 +1,37 @@
+﻿<div id="wrapperWeather">
+    <h3>Vädret i Kalmar</h3>
+    <table>
+        <thead>
+            <tr>
+                <th><i class="fas fa-temperature-low"></i> Temperatur</th>
+                <th><i class="fas fa-cloud-showers-heavy"></i> Nederbörd</th>
+                <th><i class="fas fa-wind"></i> Vind</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span id="temperature"></span>  °C</td>
+                <td><span id="rain"></span> mm</td>
+                <td><span id="wind"></span> m/s</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><i>Prognosen är utfärdad för vädret i Kalmar just nu</i></p>
+</div>
+
+<script>
+    $(document).ready(function () {
+        //Anrop till SMHI:s API
+        $.get("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/16.360259/lat/56.661664/data.json", function (response) {
+            console.log(response);
+
+            //Hämtar data för nu
+            const currentWeather = response.timeSeries[0].parameters;
+
+            //Tilldelar data i form utav temperatur, nederbörd och vind från API:et
+            $("#temperature").text(currentWeather[11].values[0]);
+            $("#rain").text(currentWeather[3].values[0]);
+            $("#wind").text(currentWeather[14].values[0]);
+        });
+    });
+</script>

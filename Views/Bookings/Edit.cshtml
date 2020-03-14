@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Ändra bokning";
-    string animalsAllowed = Convert.ToString(ViewData["animalsallowed"]);
 }
 
 <!-- Brödsmulor -->
@@ -14,6 +13,7 @@
         <i class="fas fa-edit cottageIcon"></i>
         <h1 class="title">Ändra bokning</h1>
 
+        <!-- Formulär för att ändra en bokning -->
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BookingId" />

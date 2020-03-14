@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Boka stuga";
+
+    //Om djur är tillåtna eller inte
     string animalsAllowed = Convert.ToString(ViewData["animalsallowed"]);
 }
 
@@ -14,6 +16,7 @@
         <i class="fas fa-plus-circle cottageIcon"></i>
         <h1 class="title">Boka stuga</h1>
 
+        <!-- Formulär för att lägga till en bokning -->
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
