@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using smalandscamping.Data;
 using smalandscamping.Models;
+using smalandscamping.ViewModels;
 
 namespace smalandscamping.Controllers
 {
     public class CottagesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public CottagesController(ApplicationDbContext context)
+        public CottagesController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Cottages
@@ -59,15 +64,36 @@ namespace smalandscamping.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description,IsBooked")] Cottage cottage)
+        public async Task<IActionResult> Create([Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description,IsBooked,Photo")] CottageCreateViewModel cottageModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cottage);
+                //Kod för bilduppladdning
+                string cottageFileName = null;
+                if(cottageModel.Photo != null)
+                {
+                    string imagesFolder = Path.Combine(hostingEnvironment.WebRootPath, "img/cottageimg");
+                    cottageFileName = Guid.NewGuid().ToString() + "_" + cottageModel.Photo.FileName;
+                    string filePath = Path.Combine(imagesFolder, cottageFileName);
+                    cottageModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
+                Cottage newCottage = new Cottage
+                {
+                    Name = cottageModel.Name,
+                    Price = cottageModel.Price,
+                    NumberOfGuest = cottageModel.NumberOfGuest,
+                    AnimalsAllowed = cottageModel.AnimalsAllowed,
+                    Description = cottageModel.Description,
+                    IsBooked = cottageModel.IsBooked,
+                    PhotoPath = cottageFileName
+                };
+
+                _context.Add(newCottage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cottage);
+            return View();
         }
 
         // GET: Cottages/Edit/5
@@ -104,6 +130,7 @@ namespace smalandscamping.Controllers
             {
                 try
                 {
+                    //_context.Add(cottage.PhotoPath);
                     _context.Update(cottage);
                     await _context.SaveChangesAsync();
                 }

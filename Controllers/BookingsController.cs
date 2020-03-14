@@ -30,6 +30,9 @@ namespace smalandscamping.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.userid = userId;
 
+            //Hämtar användarens användarnamn, vilket är personens e-postadress
+
+
             var applicationDbContext = _context.Booking.Include(b => b.Cottage).Include(b => b.User);
             return View(await applicationDbContext.ToListAsync());
         }

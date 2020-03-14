@@ -1,54 +1,61 @@
 ﻿@model smalandscamping.Models.Booking
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detaljer bokning";
 }
 
-<h1>Details</h1>
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><span class="breadcrumbItemLoggedIn">Inloggad</span> / <a class="breadcrumbItem" asp-area="" asp-controller="Bookings" asp-action="Index">Hem</a> / Detaljer bokning</p>
 
-<div>
-    <h4>Booking</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Stuga
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cottage.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cottage.NumberOfGuest)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cottage.NumberOfGuest)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cottage.AnimalsAllowed)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cottage.AnimalsAllowed)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateArrival)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateArrival)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateLeaving)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateLeaving)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TotalPrice) kr
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.BookingId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapperAuthentication margin">
+        <i class="fas fa-edit cottageIcon"></i>
+        <h1 class="title">Detaljer bokning</h1>
+
+        <dl class="row">
+            <dt>
+                Stuga
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Cottage.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Cottage.NumberOfGuest)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Cottage.NumberOfGuest)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Cottage.AnimalsAllowed)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Cottage.AnimalsAllowed)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateArrival)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateArrival)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateLeaving)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateLeaving)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TotalPrice) kr
+            </dd>
+        </dl>
+
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.BookingId" class="linkBackEdit"><i class="fas fa-edit"></i> Ändra</a><br />
+            <a asp-action="Index" class="linkBack"><i class="fas fa-chevron-left"></i> Tillbaka till stugorna</a>
+        </div>
+    </div>
+    <div id="border-bottom"></div>
 </div>

@@ -1,38 +1,50 @@
 ﻿@model smalandscamping.Models.Booking
 
 @{
-    ViewData["Title"] = "Edit";
-    string animalsAllowed = Convert.ToString(ViewData["animalsallowed"]);  
+    ViewData["Title"] = "Ändra bokning";
+    string animalsAllowed = Convert.ToString(ViewData["animalsallowed"]);
 }
 
-<h1>Edit</h1>
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><span class="breadcrumbItemLoggedIn">Inloggad</span> / <a class="breadcrumbItem" asp-area="" asp-controller="Bookings" asp-action="Index">Hem</a> / Ändra bokning</p>
 
-<h4>Booking</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapperAuthentication margin">
+        <i class="fas fa-edit cottageIcon"></i>
+        <h1 class="title">Ändra bokning</h1>
+
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BookingId" />
-            <input type="text" value="@ViewData["cottageprice"]" name="price" />
-            <div class="form-group">
-                <label asp-for="DateArrival" class="control-label"></label>
-                <input asp-for="DateArrival" class="form-control" />
-                <span asp-validation-for="DateArrival" class="text-danger"></span>
+            <input type="hidden" value="@ViewData["cottageprice"]" name="price" />
+            <div>
+                <p>
+                    <label asp-for="DateArrival"></label>
+                    <input asp-for="DateArrival" class="inputText" />
+                    <span asp-validation-for="DateArrival" class="text-danger"></span>
+                </p>
             </div>
-            <div class="form-group">
-                <label asp-for="DateLeaving" class="control-label"></label>
-                <input asp-for="DateLeaving" class="form-control" />
-                <span asp-validation-for="DateLeaving" class="text-danger"></span>
+            <div>
+                <p>
+                    <label asp-for="DateLeaving"></label>
+                    <input asp-for="DateLeaving" class="inputText" />
+                    <span asp-validation-for="DateLeaving" class="text-danger"></span>
+                </p>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div>
+                <input type="submit" value="Spara" class="authenticationBtn btn" />
             </div>
         </form>
+
+        <div>
+            <a asp-action="Index" class="linkBack"><i class="fas fa-chevron-left"></i> Tillbaka till bokningarna</a>
+        </div>
     </div>
+    <div id="border-bottom"></div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

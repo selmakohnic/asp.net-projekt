@@ -1,67 +1,108 @@
 ﻿@model IEnumerable<smalandscamping.Models.Booking>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Bokningar";
 }
 
-<h1>Index</h1>
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><span class="breadcrumbItemLoggedIn">Inloggad</span> / <a class="breadcrumbItem" asp-area="" asp-controller="Bookings" asp-action="Index">Hem</a></p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Stuga
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cottage.NumberOfGuest)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cottage.AnimalsAllowed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateArrival)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateLeaving)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            if (ViewBag.userid == item.UserId)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cottage.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cottage.NumberOfGuest)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cottage.AnimalsAllowed)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateArrival)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateLeaving)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalPrice) kr
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.BookingId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.BookingId">Delete</a>
-                    </td>
-                </tr>
-            }
-
-        }
-    </tbody>
-</table>
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapper margin">
+        <i class="fas fa-calendar-alt cottageIcon"></i>
+        <h1 class="title">Bokningar</h1>
+        <br />
+        <div class="wrapperTable">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Stuga
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cottage.NumberOfGuest)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cottage.AnimalsAllowed)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateArrival)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateLeaving)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TotalPrice)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        //Om användaren är admin kan personen se alla bokningar
+                        if (User.IsInRole("Admin"))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cottage.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cottage.NumberOfGuest)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cottage.AnimalsAllowed)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateArrival)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateLeaving)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalPrice) kr
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.BookingId"><i class="fas fa-edit crudItem"></i></a> |
+                                    <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fas fa-info crudItem"></i></a> |
+                                    <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fas fa-trash-alt crudItem"></i></a>
+                                </td>
+                            </tr>
+                        }
+                        //Om användaren inte är admin kan personen bara se sina egna bokningar
+                        else if (ViewBag.userid == item.UserId)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cottage.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cottage.NumberOfGuest)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cottage.AnimalsAllowed)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateArrival)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateLeaving)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalPrice) kr
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.BookingId"><i class="fas fa-edit crudItem"></i></a> |
+                                    <a asp-action="Details" asp-route-id="@item.BookingId"><i class="fas fa-info crudItem"></i></a> |
+                                    <a asp-action="Delete" asp-route-id="@item.BookingId"><i class="fas fa-trash-alt crudItem"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="border-bottom"></div>
+</div>

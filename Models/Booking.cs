@@ -24,14 +24,14 @@ namespace smalandscamping.Models
 
         //Datum för ankomst med en kontroll av val av datum
         [Required(ErrorMessage = "Välj ett datum för din ankomst")]
-        [Display(Name = "Datum för ankomst")]
+        [Display(Name = "Ankomst")]
         [DataType(DataType.Date)]
         [DateCheck(ErrorMessage = "Du kan inte välja ett datum som redan har varit")]
         public DateTime DateArrival { get; set; }
 
         //Datum för hemkomst med en kontroll av val av datum
-        [Required(ErrorMessage = "Välj ett datum för din hemkomst")]
-        [Display(Name = "Datum för hemfärd")]
+        [Required(ErrorMessage = "Välj ett datum för din hemfärd")]
+        [Display(Name = "Hemfärd")]
         [DataType(DataType.Date)]
         [DateCheck(ErrorMessage = "Du kan inte välja ett datum som redan har varit")]
         public DateTime DateLeaving { get; set; }

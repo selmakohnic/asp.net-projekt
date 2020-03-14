@@ -229,6 +229,11 @@ h1 {
     text-align: center;
 }
 
+.wrapper .wrapperBox img {
+    max-width: 100%;
+    height: auto;
+}
+
 .wrapper .wrapperBox .fas, .wrapper .wrapperBox .far, .fa-user, .fa-unlock, .cottageIcon {
     font-size: 3em;
     margin-bottom: 0.4em;
@@ -246,6 +251,18 @@ h1 {
 
 .wrapperCenter {
     text-align: center !important;
+}
+
+.wrapperIndex .fas {
+    font-size: 1em !important;
+    color: #000 !important;
+    margin-right: 0.2em;
+}
+
+.wrapperIndex ul {
+    text-align: left;
+    padding-left: 0;
+    list-style: none;
 }
 
 #lightBackground {
