@@ -1,13 +1,13 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+/*------ LÄNKAR OCH KNAPPAR ------*/
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
 }
@@ -27,6 +27,7 @@ a {
 .nav-link {
     margin-top: 1.8em;
     color: #000 !important;
+    padding: 0.5em;
 }
 
 .nav-link:hover, a:hover {
@@ -55,8 +56,7 @@ a {
     padding: 0 1.8em;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+/*------ GENERELLT ------*/
 html {
   font-size: 0.95em;
 }
@@ -82,8 +82,6 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
   position: relative;
   min-height: 100%;
@@ -102,6 +100,7 @@ h1 {
     text-align: center;
 }
 
+/*------ FOOTER ------*/
 .footer {
     width: 100%;
     white-space: nowrap;
@@ -148,19 +147,71 @@ h1 {
     margin-bottom: 0;
 }
 
+/*------ HAMBURGARMENY ------*/
+header {
+    overflow: auto;
+}
+
+.hamburgerMenu, .hMenuClose {
+    float: right;
+    margin-top: 2.5em;
+    width: 26px;
+    height: 26px;
+    display: none;
+}
+
+.hamburgerMenu {
+    background-image: url("../img/menu.svg");
+}
+
+.hMenuClose {
+    background-image: url("../img/menu-closed.svg");
+}
+
+.hamburgerMenu:hover, .hMenuClose {
+    cursor: pointer;
+}
+
+#globalNav {
+    margin-top: 3.2em;
+}
+
+.navbar-brand {
+    margin-top: 0.5em;
+}
+
+.navbar-brand, #globalNav {
+    float: left;
+}
+
+#globalNav ul:first-child {
+    float: left;
+    padding-left: 0;
+}
+
+#globalNav ul:last-child {
+    float: right;
+    margin-left: 13.2em;
+}
+
+.nav-item, .nav-item .nav-link {
+    display: inline;
+}
+
+
 /*------ STARTSIDA OCH GENERELLT ------*/
 #logo {
     width: 13em;
 }
 
 .headerImg {
-    height: 28em; 
+    height: 27.6em;
     width: 100%;
     position: relative;
 }
 
 .headerImgIndex {
-    height: 28em;
+    height: 27.6em;
     width: 100%;
     color: #fff;
 }
@@ -210,7 +261,7 @@ h1 {
     bottom: 0;
     width: 40em;
     height: 20em;
-    margin-top: 5em;
+    margin-top: 4em;
     margin-bottom: 5em;
     padding: 1.5em;
     padding-top: 7em;
@@ -264,14 +315,18 @@ h1 {
     height: 14em;
 }
 
-.wrapper .wrapperBox .fas, .wrapper .wrapperBox .far, .fa-user, .fa-unlock, .cottageIcon {
+.wrapper .wrapperBox .fas, .wrapper .wrapperBox .far, .fa-user, .fa-unlock, .cottageIcon, .fa-check {
     font-size: 3em;
     margin-bottom: 0.4em;
     color: #d45d47;
 }
 
-.cottageIcon {
+.cottageIcon, .fa-check {
     display: block;
+    text-align: center;
+}
+
+#loginText {
     text-align: center;
 }
 
@@ -551,5 +606,197 @@ form i {
 }
 
 dt, dd {
-    width: 50%;
+    width: 100%;
+}
+
+/*------ MEDIA QUERIES ------*/
+@media screen and (max-width: 1200px) {
+    .hamburgerMenu {
+        display: block;
+    }
+
+    #globalNav {
+        display: none;
+        float: none;
+        position: absolute;
+        right: 0;
+        top: 20px;
+        z-index: 10000;
+        background-color: #fff;
+        padding-bottom: 0.5em;
+        width: 100%;
+        font-size: 1.3em;
+    }
+
+    #globalNav li {
+        display: block;
+        padding: 1em 0 1em 1.2em;
+        margin-right: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    #globalNav ul {
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    #globalNav ul:first-child, #globalNav ul:last-child {
+        float: none;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .wrapper {
+        max-width: 850px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    #wrapperWeather {
+        display: none;
+    }
+
+    #indexInfo {
+        width: 100%;
+        float: none; 
+        text-align: center;
+    }
+
+    .headerImgIndex h1 {
+        text-align: center !important;
+        font-size: 3.5em;
+    }
+
+    .headerImgIndex h3 {
+        text-align: center;
+    }
+
+    .headerBtn {
+        float: none !important;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .footer {
+        font-size: 0.9em;
+    }
+
+    #footerR {
+        margin-left: 2em;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .wrapper .wrapperBox {
+        width: 18em;
+    }
+
+    .footer .wrapper div {
+        width: 20em;
+        margin-bottom: 2em;
+    }
+
+    .footer .wrapper div:last-child {
+        margin-bottom: 0;
+    }
+
+    #footerR {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .headerImg {
+        height: 20em;
+    }
+
+    .headerImg section {
+        width: 30em;
+        height: 15em;
+        margin-top: 2.5em;
+        margin-bottom: 3em;
+        padding-top: 3em;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .wrapper {
+        max-width: 500px;
+    }
+
+    .wrapper .wrapperBox {
+        width: 100%;
+    }
+
+    .headerImgIndex {
+        height: 20em;
+    }
+
+    .headerImgIndex h1 {
+        font-size: 3em;
+    }
+
+    .footer .wrapper div {
+        width: 16.4em;
+    }
+
+    #leftP, #rightP {
+        float: none;
+        width: 100%;
+        padding: 0;
+        border: none;
+    }
+
+    #contactForm p {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .headerImg section {
+        width: 25em;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .headerImgIndex h1 {
+        font-size: 2.5em;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .headerImg section {
+        width: 20em;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .headerImgIndex {
+        height: 22em;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    #logo {
+        width: 12em;
+    }
+
+    .hamburgerMenu, .hMenuClose {
+        width: 22px;
+        height: 22px;
+    }
+
+    #globalNav {
+        top: 15px;
+    }
 }

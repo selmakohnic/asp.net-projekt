@@ -1,8 +1,19 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Tack för din bekräftelse";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><a class="breadcrumbItem" asp-area="" asp-controller="Home" asp-action="Index">Hem</a> / <a class="breadcrumbItem" asp-area="" asp-controller="Home" asp-action="Index">Registrera konto</a> / Tack för din bekräftelse</p>
+
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapperAuthentication margin">
+        <i class="fas fa-check"></i>
+        <h1 class="title">Tack för din bekräftelse!</h1>
+        <p id="loginText">Nu kan du logga in med dina inloggningsuppgifter och boka en av våra stugor</p>
+        <a class="authenticationBtn btn" asp-area="Identity" asp-page="/Account/Login">Logga in</a><br /><br />
+    </div>
+    <div id="border-bottom"></div>
+</div>

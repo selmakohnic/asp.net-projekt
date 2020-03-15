@@ -1,22 +1,33 @@
 ﻿@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Register confirmation";
+    ViewData["Title"] = "Bekräfta registrering";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
+<!-- Brödsmulor -->
+<p class="wrapper breadcrumbWrapper"><a class="breadcrumbItem" asp-area="" asp-controller="Home" asp-action="Index">Hem</a> / <a class="breadcrumbItem" asp-area="" asp-controller="Home" asp-action="Index">Registrera konto</a> / Bekräfta registrering</p>
+
+<div id="lightBackground">
+    <div id="border-top"></div>
+    <div class="wrapperAuthentication margin">
+        <i class="fas fa-user"></i>
+        <h1 class="title">Bekräfta registrering</h1>
+        @if (@Model.DisplayConfirmAccountLink)
+        {
+            <p>
+                Du har skapat ett konto hos oss på Smålands Camping. Välkommen!
+            </p>
+            <p>
+                Innan du kan logga in behöver du bekräfta ditt konto. Klicka på knappen nedan för att bekräfta registreringen av ditt konto.
+            </p>
+            <a class="authenticationBtn btn" href="@Model.EmailConfirmationUrl">Bekräfta</a><br /><br />
+        }
+        else
+        {
+            <p>
+                Vänligen kontrollera din e-post för att bekräfta registreringen av ditt konto.
+            </p>
+        }
+    </div>
+    <div id="border-bottom"></div>
+</div>

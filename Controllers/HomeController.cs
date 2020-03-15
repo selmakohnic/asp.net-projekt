@@ -29,6 +29,7 @@ namespace smalandscamping.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //Läser ut alla stugor på startsidan
             return View(await _context.Cottage.ToListAsync());
         }
 
