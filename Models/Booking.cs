@@ -44,7 +44,7 @@ namespace smalandscamping.Models
     //Kontroll av datum som väljs så att användaren inte väljer ett datum som är tidigare än dagens datum
     public class DateCheckAttribute : ValidationAttribute
     {
-        //Returnerar true om datumet som valts är dagens datum eller senare, returnerar false om det är innan dagens datum
+        //Returnerar true om datumet som valts är senare än dagens datum, returnerar false om det är innan dagens datum eller dagens datum
         public override bool IsValid(object value)
         {
             DateTime date = Convert.ToDateTime(value);

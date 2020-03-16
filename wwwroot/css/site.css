@@ -46,7 +46,6 @@ a {
 }
 
 .logoutBtn {
-    margin-top: 2.1em;
     color: #fff;
     background-color: #44808b;
     border: 0;
@@ -196,6 +195,10 @@ header {
 
 .nav-item, .nav-item .nav-link {
     display: inline;
+}
+
+.formLogout {
+    display: inline-block;
 }
 
 

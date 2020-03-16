@@ -23,8 +23,6 @@
     $(document).ready(function () {
         //Anrop till SMHI:s API
         $.get("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/16.360259/lat/56.661664/data.json", function (response) {
-            console.log(response);
-
             //Hämtar data för nu
             const currentWeather = response.timeSeries[0].parameters;
 

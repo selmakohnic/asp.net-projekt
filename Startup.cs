@@ -69,6 +69,7 @@ namespace smalandscamping
             CreateRoles(services).Wait();
         }
 
+        //Kod för att skapa användarroller
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -81,7 +82,8 @@ namespace smalandscamping
             {
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
             }
-            
+
+            //Specificerar vilken användare som ska vara admin
             IdentityUser user = await UserManager.FindByEmailAsync("admin@smalandscamping.se");
             var User = new IdentityUser();
             await UserManager.AddToRoleAsync(user, "Admin");

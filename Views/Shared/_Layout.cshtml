@@ -2,7 +2,7 @@
     var year = DateTime.Today.ToString("yyyy");
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,14 +13,11 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
+
+    <!-- Header som består av logotyp och menyalternativ -->
     <header>
         <div class="wrapper">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logotyp.svg" alt="Smålands Camping" title="Smålands Camping" id="logo" /></a>
-            <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">-->
 
             <div class="hamburgerMenu" onclick="toggleMenu()"></div>
             <nav class="bg-white" id="globalNav">
@@ -41,15 +38,13 @@
                 <partial name="_LoginPartial" />
             </nav>
         </div>
-        <!-- </div>-->
 
     </header>
-    <!--<div class="container">
-        <main role="main" class="pb-3">-->
-    @RenderBody()
-    <!--</main>
-    </div>-->
 
+    <!-- Kod för varje enskild sida -->
+    @RenderBody()
+
+    <!-- Footer med kontaktuppgifter -->
     <footer class="footer">
         <div class="wrapper wrapperPlacement">
             <div>

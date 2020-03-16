@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<smalandscamping.Models.Cottage>
-
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
 @{
     ViewData["Title"] = "Startsida";
 }
@@ -10,7 +11,11 @@
         <div id="indexInfo">
             <h1>Smålands Camping</h1>
             <h3>Boka en stuga genom att logga in</h3>
-            <a class="formBtn headerBtn btn" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
+            <!-- Visar inloggningsknappen om användaren inte är inloggad -->
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a class="formBtn headerBtn btn" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
+            }
         </div>
         <partial name="~/Views/Shared/_WeatherNow.cshtml" />
     </div>
@@ -36,7 +41,7 @@
             @if (item.IsBooked == false)
             {
                 <div class="wrapperBox wrapperIndex">
-                    <img src="@photoPath" asp-append-version="true" />
+                    <img src="@photoPath" asp-append-version="true" alt="@Html.DisplayFor(modelItem => item.Name)" title="@Html.DisplayFor(modelItem => item.Name)" />
                     <div class="contentIndex">
                         <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
                         <ul>
