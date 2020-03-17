@@ -30,9 +30,6 @@ namespace smalandscamping.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.userid = userId;
 
-            //Hämtar användarens användarnamn, vilket är personens e-postadress
-
-
             var applicationDbContext = _context.Booking.Include(b => b.Cottage).Include(b => b.User);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -61,9 +58,11 @@ namespace smalandscamping.Controllers
         //Information om stugan som bokas
         public void InfoCottage(int id)
         {
+            //Hämtar information från den stuga som har id från argument
             var cottage = _context.Cottage
                 .FirstOrDefault(m => m.CottageId == id);
 
+            //Id, namn, pris, max antal gäster och om djur är tillåtna eller inte
             ViewData["cottageid"] = id;
             ViewData["cottagename"] = cottage.Name;
             ViewData["cottageprice"] = cottage.Price;
@@ -75,6 +74,7 @@ namespace smalandscamping.Controllers
         [Authorize]
         public IActionResult Create(int id)
         {
+            //Anropar metod med information med id som argument
             InfoCottage(id);
 
             return View();
@@ -128,8 +128,6 @@ namespace smalandscamping.Controllers
 
                 bookingResult.IsBooked = true;
 
-                //_context.SaveChanges();
-
                 _context.Add(booking);
 
                 await _context.SaveChangesAsync();
@@ -142,7 +140,6 @@ namespace smalandscamping.Controllers
             return View(booking);
         }
 
-        /*------ PROBLEM HÄR! ------*/
         // GET: Bookings/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
@@ -170,7 +167,8 @@ namespace smalandscamping.Controllers
                                     select m).SingleOrDefault();
 
             ViewData["cottageprice"] = cottagePrice.Price;
-
+            ViewData["cottageid"] = cottageId;
+ 
             if (booking == null)
             {
                 return NotFound();
@@ -180,7 +178,6 @@ namespace smalandscamping.Controllers
             return View(booking);
         }
 
-        /*------ PROBLEM HÄR! ------*/
         // POST: Bookings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -201,9 +198,6 @@ namespace smalandscamping.Controllers
                     // Räknar ut antal dagar baserat på datumen som har valts
                     int days = (booking.DateLeaving.Date - booking.DateArrival.Date).Days;
 
-                    var cottage = await _context.Cottage
-                    .FirstOrDefaultAsync(m => m.CottageId == booking.CottageId);
-
                     //Pris för aktuell stuga
                     var cottagePrice = Convert.ToInt32(Request.Form["price"]);
 
@@ -223,24 +217,13 @@ namespace smalandscamping.Controllers
                         TotalPrice = cottagePrice + 3000;
                     }
 
-                    //Lagrar värde för totalpris innan lagring i databas
-                    booking.TotalPrice = TotalPrice;
-                    booking.CottageId = id;
+                    //Uppdaterar datum för ankomst, datum för hemfärd och det totala priset
+                    var bookingU = new Booking { BookingId = id, DateArrival = booking.DateArrival.Date, DateLeaving = booking.DateLeaving.Date, TotalPrice = TotalPrice };
+                    _context.Booking.Attach(bookingU);
+                    _context.Entry(bookingU).Property(x => x.DateArrival).IsModified = true;
+                    _context.Entry(bookingU).Property(x => x.DateLeaving).IsModified = true;
+                    _context.Entry(bookingU).Property(x => x.TotalPrice).IsModified = true;
 
-                    //Tilldelar bokningen till den användare som är inloggad
-                    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    booking.UserId = userId;
-
-                    //Bokningsstatus för stugan ändras till bokad
-                    /*Cottage bookingResult = (from p in _context.Cottage
-                                             where p.CottageId == id
-                                             select p).SingleOrDefault();
-
-                    bookingResult.IsBooked = true;*/
-
-                    //_context.Add(booking);
-
-                    _context.Update(booking);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -256,8 +239,7 @@ namespace smalandscamping.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            /*ViewData["CottageId"] = new SelectList(_context.Cottage, "CottageId", "Description", booking.CottageId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", booking.UserId);*/
+
             return View(booking);
         }
 
@@ -274,6 +256,7 @@ namespace smalandscamping.Controllers
                 .Include(b => b.Cottage)
                 .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.BookingId == id);
+
             if (booking == null)
             {
                 return NotFound();

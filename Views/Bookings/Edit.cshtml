@@ -17,6 +17,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BookingId" />
+            <input type="hidden" value="@ViewData["cottageid"]" name="cottageid" />
             <input type="hidden" value="@ViewData["cottageprice"]" name="price" />
             <div>
                 <p>

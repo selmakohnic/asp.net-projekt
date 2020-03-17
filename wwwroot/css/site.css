@@ -315,7 +315,7 @@ header {
 .wrapper .wrapperBox img {
     object-fit: cover;
     max-width: 100%;
-    height: 14em;
+    height: 300px;
 }
 
 .wrapper .wrapperBox .fas, .wrapper .wrapperBox .far, .fa-user, .fa-unlock, .cottageIcon, .fa-check {
@@ -739,6 +739,10 @@ dt, dd {
 
     .wrapper .wrapperBox {
         width: 100%;
+    }
+
+    .wrapper .wrapperBox img {
+        height: 400px;
     }
 
     .headerImgIndex {

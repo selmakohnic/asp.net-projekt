@@ -72,12 +72,20 @@ namespace smalandscamping.Controllers
                 string cottageFileName = null;
                 if(cottageModel.Photo != null)
                 {
+                    //Mapp där bilderna lagras
                     string imagesFolder = Path.Combine(hostingEnvironment.WebRootPath, "img/cottageimg");
+
+                    //Filnamn
                     cottageFileName = Guid.NewGuid().ToString() + "_" + cottageModel.Photo.FileName;
+
+                    //Sökväg till bild
                     string filePath = Path.Combine(imagesFolder, cottageFileName);
+
+                    //Kopierar över till server
                     cottageModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
                 }
 
+                //Lägger till alla värden
                 Cottage newCottage = new Cottage
                 {
                     Name = cottageModel.Name,
@@ -106,10 +114,12 @@ namespace smalandscamping.Controllers
             }
 
             var cottage = await _context.Cottage.FindAsync(id);
+
             if (cottage == null)
             {
                 return NotFound();
             }
+
             return View(cottage);
         }
 
@@ -119,9 +129,9 @@ namespace smalandscamping.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description,IsBooked")] Cottage cottage)
+        public async Task<IActionResult> Edit(int id, [Bind("CottageId,Name,Price,NumberOfGuest,AnimalsAllowed,Description,IsBooked,Photo")] CottageCreateViewModel cottageModel)
         {
-            if (id != cottage.CottageId)
+            if (id != cottageModel.CottageId)
             {
                 return NotFound();
             }
@@ -130,13 +140,25 @@ namespace smalandscamping.Controllers
             {
                 try
                 {
-                    //_context.Add(cottage.PhotoPath);
+                    //Tilldelar värden för uppdatering av stuga
+                    var cottage = await _context.Cottage
+                    .FirstOrDefaultAsync(m => m.CottageId == id);
+
+                    cottage.Name = cottageModel.Name;
+                    cottage.Price = cottageModel.Price;
+                    cottage.NumberOfGuest = cottageModel.NumberOfGuest;
+                    cottage.AnimalsAllowed = cottageModel.AnimalsAllowed;
+                    cottage.Description = cottageModel.Description;
+                    cottage.IsBooked = cottageModel.IsBooked;
+                    cottage.PhotoPath = cottage.PhotoPath;
+
+
                     _context.Update(cottage);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CottageExists(cottage.CottageId))
+                    if (!CottageExists(cottageModel.CottageId))
                     {
                         return NotFound();
                     }
@@ -147,7 +169,7 @@ namespace smalandscamping.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cottage);
+            return View();
         }
 
         // GET: Cottages/Delete/5

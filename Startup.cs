@@ -85,8 +85,11 @@ namespace smalandscamping
 
             //Specificerar vilken användare som ska vara admin
             IdentityUser user = await UserManager.FindByEmailAsync("admin@smalandscamping.se");
-            var User = new IdentityUser();
-            await UserManager.AddToRoleAsync(user, "Admin");
+
+           
+                await UserManager.AddToRoleAsync(user, "Admin");
+            
+            
         }
     }
 }
