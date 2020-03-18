@@ -17,9 +17,9 @@ namespace smalandscamping.Controllers
     public class CottagesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment hostingEnvironment;
 
-        public CottagesController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
+        public CottagesController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
             this.hostingEnvironment = hostingEnvironment;

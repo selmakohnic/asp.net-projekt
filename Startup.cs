@@ -72,24 +72,28 @@ namespace smalandscamping
         //Kod för att skapa användarroller
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var _userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            IdentityResult roleResult;
-            
-            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
-            if (!roleCheck)
+            //Kontrollerar om det inte finns någon användare med e-postadressen nedan
+            if (await _userManager.FindByEmailAsync("admin@smalandscamping.se") == null)
             {
-                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+                //Skapar en ny användare som är admin
+                IdentityUser administrator = new IdentityUser()
+                {
+                    UserName = "admin@smalandscamping.se",
+                    Email = "admin@smalandscamping.se",
+                    EmailConfirmed = true
+                };
+
+                //Lösenord för inloggning för admin
+                await _userManager.CreateAsync(administrator, "Lösenord1");
+
+                //Skapar användarrollen admin
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+
+                IdentityResult result = await _userManager.AddToRoleAsync(administrator, "Admin");
             }
-
-            //Specificerar vilken användare som ska vara admin
-            IdentityUser user = await UserManager.FindByEmailAsync("admin@smalandscamping.se");
-
-           
-                await UserManager.AddToRoleAsync(user, "Admin");
-            
-            
         }
     }
 }
